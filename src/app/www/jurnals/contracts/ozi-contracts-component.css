@@ -1,0 +1,48 @@
+/* Structure */
+.example-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+}
+.example-header {
+  min-height: 64px;
+  display: flex;
+  align-items: baseline;
+  padding: 8px 24px 0;
+  font-size: 20px;
+  justify-content: space-between;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  flex-grow: 1;
+  margin-left: 32px;
+}
+.mat-column-id{
+  max-width: 64px;
+}
+.mat-column-menu{
+  max-width: 50px;
+  text-align: center;
+}
+.mat-table {
+  overflow: auto;
+  max-height: 500px;
+}
+  .example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .example-full-width {
+    width: 220px;
+  }
+  .example-full-width100 {
+    width: 100px;
+    margin-left:0;
+  }
+  .example-small-select{
+    margin-right: 30px;
+  }
+  

@@ -1,0 +1,41 @@
+/* .panel-select-add {
+  max-height: 456px !important;
+} */
+/* .mat-autocomplete-panel {
+  width: 350px;
+  max-width : none  ! important ;
+} */
+/* .example-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 100%;
+} */
+.sbdh-full-width {
+  display: flex;
+  flex-direction: column;
+}
+.sbdh-45p-width {
+  width: 45%;
+  margin: 0 10px;
+}
+.sbdh-nofull-width {
+   display: flex; 
+   flex-direction: column; 
+}
+.sbdh-nofull-width > * {
+  width: 30%;
+}
+.sbdh-full-width > * {
+  width: 100%;
+}
+.example-margin {
+  margin: 0 10px;
+}
+.truncate-grid-p{
+  display: inline-block;
+/* max-width: 50px; */
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+vertical-align: top
+}

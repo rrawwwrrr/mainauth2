@@ -1,0 +1,22 @@
+
+.loginForm{
+  width: 1024px;
+  margin: auto;
+}
+.sbidh-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .sbidh-container > * {
+    width: 100%;
+  }
+  .sbidh-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .sbidh-full-width {
+    width: 100%;
+  }

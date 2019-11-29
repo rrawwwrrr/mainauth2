@@ -1,0 +1,108 @@
+<a class="fab-button" target="_blank" href="{{apiUrl}}/print/users">
+  <button color="primary" mat-fab>
+    <mat-icon>print</mat-icon>
+  </button>
+</a>
+<!-- <button mat-fab  color="primary">Primary</button> -->
+<div class="example-container mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="otdel">
+      <th mat-header-cell *matHeaderCellDef> Отдел</th>
+      <td mat-cell *matCellDef="let row"> {{row.otdel}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fio">
+      <th mat-header-cell *matHeaderCellDef> ФИО </th>
+      <td mat-cell *matCellDef="let row"> {{row.fio}} </td>
+    </ng-container>
+    <ng-container matColumnDef="dolj">
+      <th mat-header-cell *matHeaderCellDef> Должность </th>
+      <td mat-cell *matCellDef="let row"> {{row.dolj}} </td>
+
+    </ng-container>
+    <ng-container matColumnDef="ncbn">
+      <th mat-header-cell *matHeaderCellDef> Кабинет</th>
+      <td mat-cell *matCellDef="let row"> {{row.ncbn}} </td>
+
+    </ng-container>
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> E-mail </th>
+      <td mat-cell *matCellDef="let row">{{row.email}}@sbidh.ru</td>
+
+    </ng-container>
+    <ng-container matColumnDef="nphn2">
+      <th mat-header-cell *matHeaderCellDef>Город </th>
+      <td mat-cell *matCellDef="let row"> {{row.nphn2}} </td>
+
+    </ng-container>
+    <ng-container matColumnDef="newphone">
+      <th mat-header-cell *matHeaderCellDef>Местный</th>
+      <td mat-cell *matCellDef="let row"> {{row.newphone}} </td>
+
+    </ng-container>
+
+    <ng-container matColumnDef="otdel-search">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-form-field class="example-full-width">
+          <input [formControl]="otdel_form" matInput>
+        </mat-form-field>
+      </th>
+    </ng-container>
+    <ng-container matColumnDef="fio-search">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-form-field class="example-full-width">
+          <input [formControl]="fio_form" matInput>
+        </mat-form-field>
+      </th>
+    </ng-container>
+    <ng-container matColumnDef="dolj-search">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-form-field class="example-full-width">
+          <input [formControl]="dolj_form" matInput>
+        </mat-form-field>
+      </th>
+    </ng-container>
+    <ng-container matColumnDef="ncbn-search">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-form-field class="example-full-width">
+          <input [formControl]="ncbn_form" matInput>
+        </mat-form-field>
+      </th>
+    </ng-container>
+    <ng-container matColumnDef="email-search">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-form-field class="example-full-width">
+          <input [formControl]="email_form" matInput>
+        </mat-form-field>
+      </th>
+    </ng-container>
+    <ng-container matColumnDef="nphn2-search">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-form-field class="example-full-width">
+          <input [formControl]="nphn2_form" matInput>
+        </mat-form-field>
+      </th>
+    </ng-container>
+    <ng-container matColumnDef="newphone-search">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-form-field class="example-full-width">
+          <input [formControl]="newphone_form" matInput>
+        </mat-form-field>
+      </th>
+    </ng-container>
+    <ng-container matColumnDef="item-description">
+      <th mat-header-cell *matHeaderCellDef> Name of the item purchased </th>
+    </ng-container>
+    <!-- Cost Description Column -->
+    <ng-container matColumnDef="cost-description">
+      <th mat-header-cell *matHeaderCellDef> Cost of the item in USD </th>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns2; sticky: true" class="example-second-header-row"></tr>
+    <tr mat-row>
+      <td>asd</td>
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr> -->
+  </table>
+</div>

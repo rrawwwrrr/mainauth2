@@ -1,0 +1,123 @@
+<h1 mat-dialog-title>Новая заявка</h1>
+<div mat-dialog-content>
+  <mat-tab-group class="sbidh-tab-group">
+    <mat-tab label="Данные">
+      <br>
+      <form class="example-container" [formGroup]="addFormGroup">
+        <mat-form-field class="sbdh-20p-width">
+          <mat-select placeholder="Тип" formControlName="type">
+            <mat-option *ngFor="let type of this.data.types" [value]="type.value">
+              {{type.viewValue}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="addFormGroup.controls['type'].hasError('min')">
+            Нужно что нибудь выбрать
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="sbdh-20p-width">
+          <input matInput [matDatepicker]="pickerdoc" formControlName="datebid" placeholder="Дата документа" onkeyup="
+            var v = this.value;
+            if (v.match(/^\d{2}$/) !== null) {
+            this.value = v + '.';
+            } else if (v.match(/^\d{2}\.\d{2}$/) !== null) {
+            this.value = v + '.';
+            }"
+             maxlength="10">
+          <mat-datepicker-toggle matSuffix [for]="pickerdoc"></mat-datepicker-toggle>
+          <mat-datepicker #pickerdoc></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="sbdh-20p-width">
+          <input matInput placeholder="Время заявки" formControlName="time" onkeyup="
+        var v = this.value;
+        if (v.match(/^\d{2}$/) !== null) {
+            this.value = v + ':';
+        }"
+            (keypress)="_keyPress($event)" maxlength="5">
+          <mat-error *ngIf="addFormGroup.controls['time'].hasError('pattern')">
+            Неверно указано время (ЧЧ:ММ)
+          </mat-error>
+          <mat-error *ngIf="addFormGroup.controls['time'].hasError('required')">
+            Ввод
+            <strong>Обязателен</strong>
+          </mat-error>
+        </mat-form-field>
+
+
+        <!-- <mat-form-field *ngIf="addFormGroup.controls['type'].value !== 1" class="sbdh-20p-width">
+          <input matInput formControlName="address" name="address" placeholder="Адрес">
+        </mat-form-field> -->
+        <mat-form-field class="sbdh-20p-width">
+          <input formControlName="address" placeholder="Адрес" aria-label="Number" matInput [matAutocompleteDisabled]="addFormGroup.controls['type'].value !== 1"
+            [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete" [panelWidth]=400 [displayWith]="displayView">
+            <mat-option *ngFor="let option of filteredTraf | async" [value]="option">
+              {{ option.street }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field class="sbdh-49p-width">
+          <textarea matInput formControlName="problem" name="problem" placeholder="Проблема"></textarea>
+        </mat-form-field>
+        <mat-form-field class="sbdh-49p-width">
+          <textarea matInput formControlName="comment" name="comment" placeholder="Комменарий"></textarea>
+        </mat-form-field>
+        
+        <mat-form-field class="sbdh-20p-width">
+          <!-- <span matPrefix>+7 &nbsp;</span> -->
+          <input type="tel" formControlName="phone" name="phone" matInput placeholder="Телефон заявителя">
+        </mat-form-field>
+        <mat-form-field class="sbdh-20p-width">
+          <input matInput formControlName="contact" name="contact" placeholder="Заявитель">
+        </mat-form-field>
+        
+      </form>
+    </mat-tab>
+
+    <mat-tab label="Отправить">
+      <br>
+      <mat-form-field *ngIf="addFormGroup.controls['type'].value; else elseBlock">
+        <mat-select placeholder="Кому отправляем" panelClass="panel-select-add" [formControl]="isppodrControl" multiple>
+          <mat-option *ngFor="let isp of isppodrs" [value]="isp.id">
+            {{ isp.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-checkbox class="mat-checkbox-margin" [(ngModel)]="save">Запомнить выбранное как шаблон</mat-checkbox>
+      <ng-template #elseBlock>нужно выбрать тип заявки</ng-template>
+      <mat-grid-list class="sbidh-grid-list" cols="3" rowHeight="40px" *ngFor="let isp of isppodrControl.value">
+
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+          {{this.data.isppodr[isp].name}}
+        </mat-grid-tile>
+
+        <mat-grid-tile class="sbidh-grid-list" [colspan]="1" [rowspan]="1">
+          <mat-form-field>
+            <span matPrefix>Почта: &nbsp;</span>
+            <input matInput [(ngModel)]="this.data.isppodr[isp].email">
+            <!-- <mat-icon matPrefix>email</mat-icon> -->
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile class="sbidh-grid-list" [colspan]="1" [rowspan]="1">
+          <mat-form-field>
+            <span matPrefix>Телефон :&nbsp; </span>
+            <input matInput [(ngModel)]="this.data.isppodr[isp].phone">
+            <!-- <mat-icon matSuffix>phone</mat-icon> -->
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-tab>
+
+    <mat-tab label="Карта">
+
+      <div #yamaps style="width: 100%; height: 500px;"></div>
+    </mat-tab>
+
+  </mat-tab-group>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()"> закрыть</button>
+  <button *ngIf="addFormGroup.valid" mat-button (click)="confirmSelection()" color="primary" cdkFocusInitial>создать</button>
+  <button mat-button (click)="confirmSelection()" color="primary" cdkFocusInitial>Ok</button>
+</div>

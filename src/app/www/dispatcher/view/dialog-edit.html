@@ -1,0 +1,166 @@
+<h1 mat-dialog-title>Редактор</h1>
+<div mat-dialog-content>
+  <mat-tab-group class="sbidh-tab-group">
+    <mat-tab label="Данные">
+      <div class="sbidh-tab-content">
+        <br> 
+        <table class="example-full-width" cellspacing="0">
+          <tr>
+            <td>
+              <mat-form-field class="example-full-width">
+                <input [(ngModel)]="namedog" name="namedog" matInput placeholder="Номер договора">
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field class="example-full-width" [formGroup]="dateForm">
+                <input #datePicker matInput [matDatepicker]="myDatepicker" formControlName="datePickerInput" placeholder="Дата договора"
+                  onkeyup="
+                    var v = this.value;
+                    if (v.match(/^\d{2}$/) !== null) {
+                        this.value = v + '/';
+                    } else if (v.match(/^\d{2}\/\d{2}$/) !== null) {
+                        this.value = v + '/';
+                    }" (keypress)="_keyPress($event)" maxlength="10">
+                <mat-datepicker-toggle matSuffix [for]="myDatepicker">
+                </mat-datepicker-toggle>
+                <mat-datepicker #myDatepicker></mat-datepicker>
+                <mat-error *ngIf="dateForm.controls.datePickerInput.errors?.required && (dateForm.controls.datePickerInput.dirty || dateForm.controls.datePickerInput.touched)">ну не правильная же дата</mat-error>
+                <!-- <mat-error *ngIf="dateForm.controls.datePickerInput.errors?.validateDate && dateForm.controls.datePickerInput.dirty">La date n'est pas au format dd/mm/yyyy</mat-error> -->
+              </mat-form-field>
+    
+            </td>
+            <td>
+              <form class="example-form">
+                <mat-form-field class="example-full-width">
+                  <input type="text" placeholder="Исполнитель" matInput [formControl]="isppodrControl" [matAutocomplete]="auto">
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name">
+                      {{ option.name }}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </form>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <mat-form-field class="example-full-width">
+                <input [(ngModel)]="summdog" name="summdog" matInput placeholder="Сумма">
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field class="example-full-width">
+                <input [(ngModel)]="targetdog" name="targetdog" matInput placeholder="Предмет договора">
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <mat-form-field class="example-full-width">
+                <textarea [(ngModel)]="commentdog" name="commentdog" matInput placeholder="Комментарий"></textarea>
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Согласование">
+      <div class="sbidh-tab-content">
+        <br>
+        <mat-form-field>
+          <mat-select placeholder="Участники согласования" panelClass="panel-select-add" [formControl]="signControl" multiple>
+            <mat-optgroup *ngFor="let group of data.otdelGroups" [label]="group.name">
+              <mat-option *ngFor="let person of group.users" [value]="person.fio_id">
+                {{ person.fio }}
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <mat-grid-list class="sbidh-grid-list" cols="4" rowHeight="30px" *ngFor="let shoe of signControl.value">
+        <mat-grid-tile [colspan]="3" [rowspan]="1">
+          {{this.data.people[shoe]}}
+        </mat-grid-tile>
+        <mat-grid-tile class="sbidh-grid-list" [colspan]="1" [rowspan]="1">
+          <button mat-icon-button>
+            <!--<mat-icon>delete</mat-icon>-->
+          </button>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <!--<mat-list>
+        <mat-list-item *ngFor="let shoe of signControl.value">
+          {{this.data.people[shoe]}}
+        </mat-list-item>
+      </mat-list>-->
+
+
+    </mat-tab>
+
+
+    <mat-tab label="Файлы">
+      <div class="sbidh-tab-content">
+        <br>
+        <button mat-button (click)="inputFile.click()">Загрузить файл</button> {{ inputFile.value }}
+        <input #inputFile (change)="upload()" id="photo" type="file" [style.display]="'none'" multiple>
+        <h4 >Загруженые</h4>
+        <mat-grid-list class="sbidh-grid-list" cols="4" rowHeight="40px" *ngFor="let file of data.data.files">
+          <mat-grid-tile [colspan]="3" [rowspan]="1">
+            <a mat-raised-button target="_blank" href="{{environment.apiUrl}}/uploads/ozi/{{data.data.id+'/'+file.hash+'/'+file.file}}">{{file.file}}</a>
+          </mat-grid-tile>
+          <mat-grid-tile class="sbidh-grid-list" [colspan]="1" [rowspan]="1">
+            <button mat-icon-button (click)="filesDeleteDownloaded(file.file)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <h4 *ngIf="dataFiles.length">Загружаемые</h4>
+        <mat-grid-list class="sbidh-grid-list" cols="4" rowHeight="30px" *ngFor="let files of dataFiles">
+            <mat-grid-tile [colspan]="3" [rowspan]="1" *ngIf="files.upload">
+              <a mat-raised-button target="_blank" href="{{files.upload}}">{{files.filename}}</a>
+            </mat-grid-tile>
+            <mat-grid-tile class="sbidh-grid-list" [colspan]="1" [rowspan]="1" *ngIf="files.upload">
+              <button mat-icon-button (click)="filesDeleteDownloadable(files.filename)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="3" [rowspan]="1" *ngIf="!files.upload">
+              {{files.filename}}
+              <mat-progress-bar [color]="color" [mode]="mode" [value]="files.percent" [bufferValue]="bufferValue">
+              </mat-progress-bar>
+            </mat-grid-tile>
+          </mat-grid-list>
+      </div>
+    </mat-tab>
+
+    <!--<mat-tab label="Редакторы">
+      <div class="sbidh-tab-content">
+        <br>
+        <mat-form-field>
+          <mat-select placeholder="Кому разрешено изменять сей договр" panelClass="panel-select-add" [formControl]="signControl" multiple>
+            <mat-optgroup *ngFor="let group of data.otdelGroups" [label]="group.name">
+              <mat-option *ngFor="let person of group.users" [value]="person.fio_id">
+                {{ person.fio }}
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <mat-grid-list class="sbidh-grid-list" cols="4" rowHeight="30px" *ngFor="let shoe of signControl.value">
+        <mat-grid-tile [colspan]="3" [rowspan]="1">
+          {{this.data.people[shoe]}}
+        </mat-grid-tile>
+        <mat-grid-tile class="sbidh-grid-list" [colspan]="1" [rowspan]="1">
+          <button mat-icon-button>
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-tab>-->
+  </mat-tab-group>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">отмена</button>
+  <button mat-button (click)="confirmSelection()" color="primary" cdkFocusInitial>изменить</button>
+</div>

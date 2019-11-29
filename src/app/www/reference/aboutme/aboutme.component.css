@@ -1,0 +1,17 @@
+.example-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.example-container form {
+  width: 90%;
+  margin: auto;
+}
+
+.example-container form > * {
+  width: 90%;
+  max-width: 90%;
+}
+.elmeform input{
+  width: 90%;
+}

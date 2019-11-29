@@ -1,0 +1,34 @@
+<h1 mat-dialog-title>Новый контакт</h1>
+<div mat-dialog-content>
+  <form class="sbdh-form">
+    <mat-form-field class="sbdh-33-width">
+      <input placeholder="Организация" aria-label="isppodr" matInput [formControl]="myControl" [matAutocomplete]="auto" required>
+      <mat-autocomplete [panelWidth]=400 #auto="matAutocomplete">
+        <mat-option *ngFor="let isp of filteredIsp | async" [value]="isp.name">
+          {{ isp.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field class="sbdh-33-width">
+      <input matInput [(ngModel)]="name" name="name" placeholder="ФИО" required>
+    </mat-form-field>
+    <mat-form-field class="sbdh-full-width">
+      <input matInput [(ngModel)]="dolj" name="dolj" placeholder="Должность" required>
+    </mat-form-field>
+    <mat-form-field class="sbdh-33-width">
+      <input matInput [(ngModel)]="email" name="email" placeholder="Емейл" >
+    </mat-form-field>
+    <mat-form-field class="sbdh-33-width">
+      <input matInput [(ngModel)]="phone" name="phone" placeholder="Сотовый">
+    </mat-form-field>
+    <mat-form-field class="sbdh-33-width">
+      <mat-select placeholder="Обслуживает" [formControl]="typesControl" multiple>
+        <mat-option *ngFor="let type of types" [value]="type.id">{{type.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">отмена</button>
+  <button mat-button (click)="confirmSelection()" color="primary" cdkFocusInitial>создать</button>
+</div>

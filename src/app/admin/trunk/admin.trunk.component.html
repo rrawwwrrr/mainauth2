@@ -1,0 +1,40 @@
+<div class="example-container mat-elevation-z8">
+
+
+  <div class="example-header">
+    <button matTooltip="Загрузить всех" (click)="loadAriData()" mat-icon-button>
+      <mat-icon aria-label="edit">cloud_upload</mat-icon>
+    </button>
+    <mat-form-field>
+      <input matInput #filter placeholder="поиск по, отделу, фио и должности">
+    </mat-form-field>
+  </div>
+
+  <mat-table #table [dataSource]="dataSource">
+
+
+    <ng-container matColumnDef="phone">
+      <mat-header-cell *matHeaderCellDef> Телефон </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.phone}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="pwd">
+      <mat-header-cell *matHeaderCellDef> Пароль </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.pwd}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="voip">
+      <mat-header-cell *matHeaderCellDef> хз </mat-header-cell>
+      <mat-cell *matCellDef="let row"><mat-checkbox class="example-margin" [(ngModel)]="row.voip" disabled></mat-checkbox></mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="used">
+      <mat-header-cell *matHeaderCellDef> Используется? </mat-header-cell>
+      <mat-cell *matCellDef="let row"><mat-checkbox class="example-margin" [(ngModel)]="row.used" disabled></mat-checkbox></mat-cell>
+    </ng-container>
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row (dblclick)="openDialog(row)" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>

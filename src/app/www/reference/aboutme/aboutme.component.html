@@ -1,0 +1,39 @@
+<div class="example-container">
+  <form [formGroup]="meForm">
+    <mat-form-field class="elmeform">
+      <input matInput placeholder="ФИО" formControlName="fio" readonly>
+    </mat-form-field>
+    <mat-form-field class="elmeform">
+      <input matInput placeholder="Логин" formControlName="login" readonly>
+    </mat-form-field>
+    <mat-form-field class="elmeform">
+      <input matInput placeholder="Отдел" formControlName="otdel" readonly>
+    </mat-form-field>
+    <mat-form-field class="elmeform">
+      <input matInput placeholder="Должность" formControlName="dolj" readonly>
+      <!-- <textarea matInput placeholder="Textarea"></textarea> -->
+    </mat-form-field>
+    <mat-form-field class="elmeform">
+      <input matInput placeholder="Телефон" formControlName="phone" readonly>
+    </mat-form-field>
+    <mat-form-field class="elmeform">
+      <input matInput placeholder="Email" formControlName="email" readonly>
+      <!-- <span matSuffix>@sbdh.ru</span> -->
+    </mat-form-field>
+    <mat-form-field class="elmeform">
+      <input matInput placeholder="Пересылка почты" formControlName="femail">
+    </mat-form-field>
+    <mat-form-field class="elmeform">
+      <input matInput autocomplete="new-password" type="password" [placeholder]="meForm.controls['editpwd'].value ? 'Старый пароль для подтверждения' : 'Пароль для подтверждения'"
+        formControlName="password">
+    </mat-form-field>
+    <mat-checkbox formControlName="editpwd">Сменить пароль</mat-checkbox>
+    <mat-form-field class="elmeform" *ngIf="meForm.controls['editpwd'].value">
+      <input matInput type="password" placeholder="Новый пароль" formControlName="newpassword">
+    </mat-form-field>
+    <mat-form-field class="elmeform" *ngIf="meForm.controls['editpwd'].value">
+      <input matInput type="password" placeholder="Новый пароль еще раз" formControlName="dblpassword">
+    </mat-form-field>
+    <button mat-stroked-button (click)="editMe()" color="primary">Отправить</button>
+  </form>
+</div>

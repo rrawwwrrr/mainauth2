@@ -1,0 +1,194 @@
+<div class="example-container mat-elevation-z8">
+  <div class="example-header">
+    <div class="button-row">
+      <button matTooltip="Новый" (click)="openDialogAdd()" mat-icon-button>
+        <mat-icon aria-label="add">add</mat-icon>
+      </button>
+      <button matTooltip="Редактировать" mat-icon-button mat-icon-button>
+        <mat-icon aria-label="edit">edit</mat-icon>
+      </button>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>brush</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button *ngFor="let option of colors" mat-menu-item [style.background-color]="option.value">
+          <mat-icon>brush</mat-icon>
+          <span></span>
+        </button>
+      </mat-menu>
+      <a mat-icon-button color="black" target="_blank" href="/ref/isp">
+        <mat-icon aria-label="Обратно к журналу">contacts</mat-icon>
+      </a>
+      <mat-form-field floatPlaceholder="never">
+        <input matInput #filter placeholder="Поиск">
+        <button mat-button *ngIf="filter.value" matSuffix mat-icon-button aria-label="Почистить" (click)="filter.value=''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Тип" [formControl]="localtypesControl">
+          <mat-option *ngFor="let type of this.socket.Types" [value]="type">
+            {{type.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Показывать" [formControl]="localStatusControl">
+          <mat-option *ngFor="let status of statusData" [value]="status">
+            {{status.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field [formGroup]="localdateForm" class="example-full-width">
+        <input #localdatePicker matInput [matDatepicker]="mylocalDatepicker" formControlName="localdatePickerInput"
+          placeholder="Искать по дате" onkeyup="
+          var v = this.value;
+          if (v.match(/^\d{2}$/) !== null) {
+              this.value = v + '/';
+          } else if (v.match(/^\d{2}\/\d{2}$/) !== null) {
+              this.value = v + '/';
+          }"
+          (keypress)="_keyPress($event)" maxlength="10">
+        <mat-datepicker-toggle matSuffix [for]="mylocalDatepicker">
+        </mat-datepicker-toggle>
+        <mat-datepicker #mylocalDatepicker></mat-datepicker>
+        <mat-error *ngIf="(localdateForm.controls.localdatePickerInput.errors?.required && 
+        (localdateForm.controls.localdatePickerInput.dirty || localdateForm.controls.localdatePickerInput.touched))">ну
+          не правильная же дата</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon>search</mat-icon>Расширеный поиск
+      </mat-panel-title>
+      <mat-panel-description>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <mat-form-field>
+      <mat-select placeholder="Тип" [(value)]="typeSelected">
+        <mat-option *ngFor="let type of this.socket.Types" [value]="type.value">
+          {{type.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <input [(ngModel)]="inputSearchAdress" matInput placeholder="Адрес">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Показывать" [(value)]="statusSelected">
+        <mat-option *ngFor="let status of statusData" [value]="status.value">
+          {{status.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field [formGroup]="dateForm" class="example-full-width">
+      <input #datePicker matInput [matDatepicker]="myDatepicker" formControlName="datePickerInput" placeholder="Искать по дате"
+        onkeyup="
+        var v = this.value;
+        if (v.match(/^\d{2}$/) !== null) {
+            this.value = v + '/';
+        } else if (v.match(/^\d{2}\/\d{2}$/) !== null) {
+            this.value = v + '/';
+        }"
+        (keypress)="_keyPress($event)" maxlength="10">
+      <mat-datepicker-toggle matSuffix [for]="myDatepicker">
+      </mat-datepicker-toggle>
+      <mat-datepicker #myDatepicker></mat-datepicker>
+      <mat-error *ngIf="(dateForm.controls.datePickerInput.errors?.required && 
+      (dateForm.controls.datePickerInput.dirty || dateForm.controls.datePickerInput.touched))">ну
+        не правильная же дата</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select [(value)]="limitSelected" placeholder="Количество строк">
+        <mat-option *ngFor="let limit of limits" [value]="limit">
+          {{ limit }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button color="warn" (click)="socketFilter(true)" mat-icon-button>
+      <mat-icon aria-label="Example icon-button with a heart icon">clear</mat-icon>
+    </button>
+    <button color="warn" (click)="socketFilter(false)" mat-icon-button>
+      <mat-icon aria-label="Example icon-button with a heart icon">play_arrow</mat-icon>
+    </button>
+
+  </mat-expansion-panel>
+
+  <div class="example-loading-shade" *ngIf="this.socket.isLoadingResults">
+    <mat-spinner *ngIf="this.socket.isLoadingResults"></mat-spinner>
+    <!--div class="example-rate-limit-reached" *ngIf="dataSource.isRateLimitReached">
+      GitHub's API rate limit has been reached. It will be reset in one minute.
+    </div-->
+  </div>
+  <table mat-table #table [dataSource]="dataSource" matSort>
+    <!-- ID Column -->
+    <ng-container matColumnDef="checkbox">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+      <td mat-cell *matCellDef="let row" [style.color]="row.color">
+        <mat-checkbox>
+          <i class="material-icons">{{row.icon}}</i>
+        </mat-checkbox>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>Номер</th>
+      <td mat-cell *matCellDef="let row" [style.color]="row.color">
+        {{row.id}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="datebid">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Дата открытия</th>
+      <td mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.datebid | date: "dd.MM.yy, H:mm"}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="finishbid">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Дата закрытия</th>
+      <td mat-cell *matCellDef="let row" [style.color]="row.color">
+        <a *ngIf="row.finishbid"> {{row.finishbid | date: "dd.MM.yy, H:mm"}}</a>
+        <a *ngIf="!row.finishbid">-------//--------</a>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="contact">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Заявитель</th>
+      <td mat-cell *matCellDef="let row" [style.color]="row.color">
+        <button mat-button [matMenuTriggerFor]="menutf">{{row.contact}}</button>
+        <mat-menu #menutf="matMenu">
+          <button *ngFor="let option of row.contactagg" (click)="openDialogEditContact(row.id, option)" mat-menu-item>
+            {{option.name}} : {{option.number}}
+          </button>
+          <button (click)="openDialogAddContact(row.id)" mat-menu-item>Добавить подписчика</button>
+        </mat-menu>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="address">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Адрес</th>
+      <td mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.address}} </td>
+    </ng-container>
+    <ng-container matColumnDef="problem">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Проблема</th>
+      <td mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.problem}} </td>
+    </ng-container>
+    <ng-container matColumnDef="creator">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Принял</th>
+      <td mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.creator}} </td>
+    </ng-container>
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Статус</th>
+      <td mat-cell *matCellDef="let row" [style.color]="row.coloricon">
+        <i class="material-icons">{{row.status}}</i>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="info">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Инфо</th>
+      <td mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.info}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumnsDogs"></tr>
+    <tr mat-row (dblclick)="openDialogShowSigning(row)" *matRowDef="let row; columns: displayedColumnsDogs;"></tr>
+  </table>
+  <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="200">
+  </mat-paginator>
+</div>

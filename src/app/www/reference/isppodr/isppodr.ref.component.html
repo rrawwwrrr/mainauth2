@@ -1,0 +1,41 @@
+<div class="example-container mat-elevation-z8">
+
+  <div class="example-header">
+    <button (click)="openDialogAdd()" mat-icon-button>
+      <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+    </button>
+    <a mat-icon-button color="black" href="/disp">
+      <mat-icon aria-label="Обратно к журналу">&#xE8A8;</mat-icon>
+    </a>
+    <mat-form-field>
+      <input matInput #filter placeholder="поиск">
+    </mat-form-field>
+  </div>
+
+  <mat-table #table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="isppodrName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Организация </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.isppodrName}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> ФИО </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="dolj">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Должность </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.dolj}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Э-почта</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.email}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="phone">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Сотовый</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.phone}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row (dblclick)="openDialogEdit(row)" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="200"> </mat-paginator>
+</div>

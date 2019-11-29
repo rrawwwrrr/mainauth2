@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Новый подписчик</h1>
+<div [formGroup]='addFormGroup' mat-dialog-content>
+  <mat-form-field class="sbdh-20p-width">
+    <span matPrefix>+7 &nbsp;</span>
+    <input type="tel" formControlName="phone" name="phone" matInput placeholder="Телефон заявителя">
+  </mat-form-field>
+  <mat-form-field class="sbdh-20p-width">
+    <input matInput formControlName="contact" name="contact" placeholder="Заявитель">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()"> закрыть</button>
+  <button *ngIf="addFormGroup.valid" mat-button (click)="confirmSelection()" color="primary" cdkFocusInitial>создать</button>
+  <button mat-button (click)="confirmSelection()" color="primary" cdkFocusInitial>Ok</button>
+</div>

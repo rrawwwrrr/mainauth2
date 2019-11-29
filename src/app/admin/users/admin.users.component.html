@@ -1,0 +1,52 @@
+<div class="example-container mat-elevation-z8">
+
+
+  <div class="example-header">
+    <button matTooltip="Загрузить всех" (click)="loadAriData()" mat-icon-button>
+      <mat-icon aria-label="edit">cloud_upload</mat-icon>
+    </button>
+    <mat-form-field>
+      <input matInput #filter placeholder="поиск по, отделу, фио и должности">
+    </mat-form-field>
+  </div>
+
+  <mat-table #table [dataSource]="dataSource">
+
+
+    <ng-container matColumnDef="otdel">
+      <mat-header-cell *matHeaderCellDef> Отдел </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.otdel}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="fio">
+      <mat-header-cell *matHeaderCellDef> ФИО </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.fio}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="dolj">
+      <mat-header-cell *matHeaderCellDef> Должность </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.dolj}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="ncbn">
+      <mat-header-cell *matHeaderCellDef> Кабинет </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.ncbn}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef> E-mail </mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.email}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="nphn2">
+      <mat-header-cell *matHeaderCellDef> Город </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.nphn2}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="newphone">
+      <mat-header-cell *matHeaderCellDef> Местный </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.newphone}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row (dblclick)="openDialog(row)" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>

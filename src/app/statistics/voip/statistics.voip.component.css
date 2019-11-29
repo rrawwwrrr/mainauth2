@@ -1,0 +1,46 @@
+/* Structure */
+.example-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+}
+
+.example-header {
+  min-height: 64px;
+  display: flex;
+  align-items: baseline;
+  padding: 8px 24px 0;
+  font-size: 20px;
+  justify-content: space-between;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  flex-grow: 1;
+  margin-left: 32px;
+}
+.mat-column-phone {
+  max-width: 120px;
+}
+.mat-column-fio {
+  margin: 0 15px 0 15px;
+  width: 200px;
+}
+.element-hover:hover {
+  background: #f5f5f5;
+}
+.mat-table {
+  overflow: auto;
+  max-height: 780px;
+}
+
+.mat-column-ncbn,
+.mat-column-newphone,
+.mat-column-nphn2 {
+  max-width: 64px;
+}
+.fab-button {
+  position: fixed;
+  bottom: 100px;
+  right: 100px;
+}

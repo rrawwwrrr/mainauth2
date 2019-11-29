@@ -1,0 +1,17 @@
+
+.sbdh-20p-width {
+  width: 25%;
+}
+.sbdh-49p-width {
+  width: 49%;
+}
+.example-full-width {
+  width: 100%;
+}
+
+.mat-grid-tile .mat-figure {
+  justify-content: left !important;
+}
+.mat-checkbox-margin{
+  margin: 0 20px;
+}

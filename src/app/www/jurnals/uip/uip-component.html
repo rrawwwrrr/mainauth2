@@ -1,0 +1,82 @@
+<div class="uip-head-table mat-elevation-z8">
+  <table mat-table class="uip-table1" [dataSource]="kbkdataSource">
+
+    <ng-container matColumnDef="first" sticky>
+      <td [style.background-color] ="'mediumaquamarine'" mat-cell *matCellDef="let index = index"> {{firstColumn[index]}} </td>
+    </ng-container>
+
+    <ng-container [matColumnDef]="column" *ngFor="let column of columnss">
+      <td mat-cell [style.background-color] ="element.color" *matCellDef="let element;let index=index"><a *ngIf="(index===0 || index===4 ); else elseBlock">{{
+          element[column] }}</a>
+        <ng-template #elseBlock>{{ element[column] | number:'1.2-2':'ru' }} </ng-template>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="last" stickyEnd>
+      <!-- <th mat-header-cell *matHeaderCellDef></th> -->
+      <!-- <td [style.background-color] ="'mediumaquamarine'" mat-cell *matCellDef="let element"> -->
+          <td [style.background-color] ="'mediumaquamarine'" mat-cell *matCellDef="let element">
+       {{ element.last}} <!-- <mat-icon>more_vert</mat-icon> -->
+      </td>
+    </ng-container>
+
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+<div class="uip-foot-table" >
+  <table mat-table class="uip-table2" [dataSource]="uipdataSource" matSort>
+    
+    <ng-container matColumnDef="num" >
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+      <td mat-cell *matCellDef="let index = index"> {{index +1}} </td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <ng-container matColumnDef="isppodr">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Подрядчик </th>
+      <td mat-cell *matCellDef="let element"> {{element.isppodr}} </td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <ng-container matColumnDef="nmc">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> НМЦ </th>
+      <td mat-cell *matCellDef="let element"> {{element.nmc}} </td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <ng-container matColumnDef="sumdog">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Сумма </th>
+      <td mat-cell *matCellDef="let element"> {{element.sumdog | number:'1.2-2':'ru'}} </td>
+      <td mat-footer-cell *matFooterCellDef>Всего <b>{{ sum | number:'1.2-2':'ru' }}</b></td>
+    </ng-container>
+
+    <ng-container matColumnDef="paypp">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Оплата ПП </th>
+      <td mat-cell *matCellDef="let element"> {{element.paypp}} </td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <ng-container matColumnDef="comment">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Комменарий </th>
+      <td mat-cell *matCellDef="let element"> {{element.comment}} </td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <ng-container matColumnDef="dogname">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Номер договора </th>
+      <td mat-cell *matCellDef="let element"> {{element.dogname}} </td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <ng-container matColumnDef="dogdate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Дата договора </th>
+      <td mat-cell *matCellDef="let element"> {{element.dogdate | date: "dd.MM.yy"}} </td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="uipDisplayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: uipDisplayedColumns;"></tr>
+    <tr mat-footer-row *matFooterRowDef="uipDisplayedColumns; sticky: true"></tr>
+    <mat-paginator [pageSizeOptions]="[5000, 100]"></mat-paginator>
+  </table> 
+</div>

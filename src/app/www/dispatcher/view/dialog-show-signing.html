@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>ну посмотрим</h1>
+<div mat-dialog-content>
+  <mat-list>
+     <mat-divider></mat-divider>
+    <h3 mat-subheader>Файлы</h3>
+    <mat-list-item *ngFor="let file of data.data.files">
+      <mat-icon mat-list-icon>note</mat-icon>
+      
+      <h4 mat-line><a mat-raised-button target="_blank" href="{{environment.apiUrl}}/uploads/ozi/{{data.data.id+'/'+file.hash+'/'+file.file}}">{{file.file}}</a></h4>
+      <!--<p mat-line> {{note.updated | date}} </p>-->
+    </mat-list-item>
+  </mat-list>
+  <mat-form-field class="example-full-width">
+    <textarea [(ngModel)]="comment" name="comment" matInput placeholder="Замечания"></textarea>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">обратно</button>
+  <button mat-button (click)="onNoClick()">отправить замечания</button>
+  <button mat-button cdkFocusInitial>согласовано </button>
+</div>

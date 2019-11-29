@@ -1,0 +1,90 @@
+<div class="example-container mat-elevation-z15">
+  <div class="example-header">
+    <div class="button-row">
+      <button matTooltip="Новый" mat-icon-button (click)="openDialogAdd()">
+        <mat-icon aria-label="add">add</mat-icon>
+      </button>
+      <button matTooltip="Редактировать" mat-icon-button mat-icon-button>
+        <mat-icon aria-label="edit">edit</mat-icon>
+      </button>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>brush</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button *ngFor="let option of colors" mat-menu-item [style.background-color]="option.value">
+          <mat-icon>brush</mat-icon>
+          <span></span>
+        </button>
+      </mat-menu>
+    </div>
+  </div>
+  <mat-form-field class="example-full-width100" floatPlaceholder="auto">
+    <input matInput #filter placeholder="Организация">
+  </mat-form-field>
+
+
+  <mat-table #table [dataSource]="dataSource" matSort>
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef>Номер</mat-header-cell>
+      <mat-cell *matCellDef="let row" [style.color]="row.color">
+        <mat-checkbox> {{row.id}} </mat-checkbox>
+
+      </mat-cell>
+    </ng-container>
+    <!-- numdog Column -->
+    <ng-container matColumnDef="menu">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Меню</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button (click)="openDialogEdit(row)" mat-menu-item>Редактировать</button>
+          <button mat-menu-item>Запустить согласование</button>
+          <button (click)="openDialogShowSigning(row)" mat-menu-item>Просмотр для согласования</button>
+          <button mat-menu-item>Общая информация</button>
+        </mat-menu>
+      </mat-cell>
+    </ng-container>
+    <!-- numdog Column -->
+    <ng-container matColumnDef="numdog">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Договор</mat-header-cell>
+      <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.numdog}} </mat-cell>
+    </ng-container>
+    <!-- datedog Column -->
+    <ng-container matColumnDef="datedog">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Дата</mat-header-cell>
+      <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.datedogshow}} </mat-cell>
+    </ng-container>
+    <!-- isppodr Column -->
+    <ng-container matColumnDef="isppodr">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Подрядчик</mat-header-cell>
+      <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.isppodr}} </mat-cell>
+    </ng-container>
+    <!-- sumdog Column -->
+    <ng-container matColumnDef="sumdog">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Сумма</mat-header-cell>
+      <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.sumdog}} </mat-cell>
+    </ng-container>
+    <!-- sign Column -->
+    <ng-container matColumnDef="sign">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Согласовано</mat-header-cell>
+      <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.signshow}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="creator">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Создал</mat-header-cell>
+      <mat-cell *matCellDef="let row" [style.color]="row.color"> {{socket.people[row.creator]}} </mat-cell>
+    </ng-container>
+    <!-- comment Column -->
+    <ng-container matColumnDef="comment">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Предмет</mat-header-cell>
+      <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.comment}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumnsDogs"></mat-header-row>
+    <mat-row (dblclick)="openDialogShowSigning(row)" *matRowDef="let row; columns: displayedColumnsDogs;"></mat-row>
+  </mat-table>
+  <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="200">
+  </mat-paginator>
+</div>

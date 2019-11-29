@@ -1,0 +1,17 @@
+.panel-select-add {
+  max-height: 456px !important;
+}
+
+.example-form {
+  min-width: 250px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.mat-grid-tile .mat-figure {
+  justify-content: left !important;
+}

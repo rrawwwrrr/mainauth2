@@ -1,0 +1,8 @@
+
+<mat-form-field>
+  <mat-select placeholder="Район" [formControl]="districtControl" multiple>
+    <mat-option *ngFor="let district of districts" [value]="district">{{district.name}}</mat-option>
+  </mat-select>
+</mat-form-field>
+<button mat-button (click)="save()">сохранить</button>
+<div #yamaps style="width: 100%; height: 80%;"></div>

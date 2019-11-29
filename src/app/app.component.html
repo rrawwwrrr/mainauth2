@@ -1,0 +1,28 @@
+<title>{{title}}</title>
+<mat-drawer-container class="sbidh-container">
+  <mat-drawer #drawer class="sbidh-sidenav">
+    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+      <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+        <mat-icon class="mat-icon-rtl-mirror">
+          print
+        </mat-icon>
+        <a (click)="drawer.close()" matLine routerLink="{{node.type}}">{{node.filename}}</a>
+      </mat-tree-node>
+      <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
+        <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
+          <mat-icon class="mat-icon-rtl-mirror">
+            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+          </mat-icon>
+        </button>
+        {{node.filename}}
+      </mat-tree-node>
+    </mat-tree>
+  </mat-drawer>
+  <div class="sbidh-sidenav-content">
+    <button type="button" mat-button (click)="drawer.open()">
+      <mat-icon>apps</mat-icon>
+    </button>
+    <span *ngIf="myname" style="float:right;margin: 5px 2vw 0 0;"  matBadge=""  matBadgeSize="medium" matBadgeOverlap="false">{{myname}}</span>
+  </div>
+  <router-outlet></router-outlet>
+</mat-drawer-container>

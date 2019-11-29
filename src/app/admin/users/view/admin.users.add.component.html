@@ -1,0 +1,40 @@
+<form class="example-form">
+  <mat-form-field class="example-full-width">
+    <input matInput [(ngModel)]="ddata.fio" name="fio" placeholder="ФИО">
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <input matInput [(ngModel)]="ddata.dolj" name="dolj" placeholder="Должность">
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-select placeholder="Отдел" [formControl]="otdelControl" required>
+      <mat-option>--</mat-option>
+      <mat-option *ngFor="let otdel of otdels" [value]="otdel">
+        {{otdel.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <table class="example-full-width" cellspacing="0">
+    <tr>
+      <td>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="e-mail *@sbdh.ru" [(ngModel)]="ddata.email" name="email">
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Кабинет" [(ngModel)]="ddata.ncbn" name="ncbn">
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Городской" [(ngModel)]="ddata.nphn2" name="nphn2">
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="2 значный" [(ngModel)]="ddata.newphone" name="newphone">
+        </mat-form-field>
+      </td>
+    </tr>
+  </table>
+</form>

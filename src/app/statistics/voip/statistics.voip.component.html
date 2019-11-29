@@ -1,0 +1,74 @@
+<a class="fab-button" target="_blank" href="{{environment.apiUrl}}/print/sip/{{selectparam.get('startdate').value}}/{{selectparam.get('stopdate').value}}">
+  <button color="primary" mat-fab>
+    <mat-icon>print</mat-icon>
+  </button>
+</a>
+<div class="example-container mat-elevation-z8">
+
+  <form [formGroup]="selectparam">
+    <div class="example-header">
+      <mat-form-field>
+        <mat-select placeholder="Выберете журнал" formControlName="select" >
+          <mat-option value="local">По внутренним номерам</mat-option>
+          <mat-option value="city">По городским номерам</mat-option>
+        </mat-select>
+        <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+        <mat-error *ngIf="selectparam.get('select').hasError('required')">Нужно выбрать</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [matDatepicker]="dp" placeholder="С" formControlName="startdate">
+        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+        <mat-datepicker #dp></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+      <input matInput [matDatepicker]="dp2" placeholder="по" formControlName="stopdate">
+      <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
+      <mat-datepicker #dp2></mat-datepicker>
+    </mat-form-field>
+      <mat-form-field>
+        <input matInput #filter placeholder="поиск по телефону">
+      </mat-form-field>
+      <button (click)="send()" mat-button>Загрузить</button>
+    </div>
+  </form>
+  <mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="phone">
+      <mat-header-cell *matHeaderCellDef> Телефон </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.phone}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="fio">
+      <mat-header-cell *matHeaderCellDef> ФИО </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.fio}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="help">
+      <mat-header-cell *matHeaderCellDef>Срочная помощъ </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.help}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="local">
+      <mat-header-cell *matHeaderCellDef> Локальные </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.local}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="admlocal">
+      <mat-header-cell *matHeaderCellDef> Администрация </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.admlocal}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="city">
+      <mat-header-cell *matHeaderCellDef> Городские </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.city}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="free">
+      <mat-header-cell *matHeaderCellDef> 8800 </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.free}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="mobile">
+      <mat-header-cell *matHeaderCellDef> Мобильные </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.mobile}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="alls">
+      <mat-header-cell *matHeaderCellDef> Все </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.alls}} </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+    <mat-row (dblclick)="openDialog(row)" class="element-hover" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>

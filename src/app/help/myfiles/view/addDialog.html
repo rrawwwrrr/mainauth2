@@ -1,0 +1,42 @@
+<h1 mat-dialog-title>Загрузка файла(ов)</h1>
+<div mat-dialog-content>
+  <form [formGroup]="formNewFiles">
+
+    <button mat-button (click)='inputFile.click()'>Выбор файла</button>
+    <input #inputFile (change)='upload()' id='photo' type='file' [style.display]="'none'" multiple>
+    <mat-checkbox *ngIf="dataFiles.length > 1" formControlName="checkRar" class="example-margin">создать архив из {{
+      dataFiles.length }} файлов?</mat-checkbox>
+    <mat-checkbox *ngIf="formNewFiles.get('checkRar').value" formControlName="checkRarPwd" class="example-margin">Установить
+      пароль?</mat-checkbox>
+    <mat-form-field [style.width]="formNewFiles.get('checkRarPwd').value?'45%':auto" *ngIf="formNewFiles.get('checkRar').value" class="sbdh-45p-width">
+      <input matInput placeholder="Наименование архива" formControlName="nameRar">
+    </mat-form-field>
+    <mat-form-field [style.width]="'45%'" *ngIf="formNewFiles.get('checkRarPwd').value && formNewFiles.get('checkRar').value" class="sbdh-45p-width">
+      <input matInput placeholder="Пароль Архива" formControlName="pwdRar">
+    </mat-form-field>
+    <mat-grid-list cols='4' rowHeight='30px' *ngFor='let files of dataFiles'>
+      <mat-grid-tile [colspan]='3' [rowspan]='1' *ngIf='files.upload'>
+        <a target='_blank' href='{{files.upload}}'>
+          <p class="truncate-grid-p">{{files.filename}}</p>
+        </a>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]='1' [rowspan]='1' *ngIf='files.upload'>
+        <button mat-icon-button (click)='filesDeleteDownloadable(files.filename)'>
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-grid-tile>
+      <mat-grid-tile class="sbdh-grid-text-over" [colspan]='3' [rowspan]='1' *ngIf='!files.upload'>
+        <p class="truncate-grid-p">{{files.filename}}</p>
+
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]='1' [rowspan]='1' *ngIf='!files.upload'>
+        <mat-progress-bar [color]='color' [mode]='mode' [value]='files.percent' [bufferValue]='bufferValue'>
+        </mat-progress-bar>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)='onNoClick()'>отмена</button>
+  <button mat-button (click)='confirmSelection()' color='primary' cdkFocusInitial>создать</button>
+</div>

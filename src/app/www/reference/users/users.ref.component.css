@@ -1,0 +1,63 @@
+/* Structure */
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+}
+
+.example-header {
+  min-height: 64px;
+  display: flex;
+  align-items: baseline;
+  padding: 8px 24px 0;
+  font-size: 20px;
+  justify-content: space-between;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  flex-grow: 1;
+  margin-left: 32px;
+}
+.mat-column-otdel{
+  width: 30%;
+}
+.mat-column-fio{
+  margin-left: 20px;
+  width: 20%;
+}
+.mat-column-dolj{
+  width: 25%;
+}
+.mat-column-email{
+  width: 50%;
+  margin-left: 20px;
+} 
+
+.mat-column-ncbn, 
+.mat-column-newphone, 
+.mat-column-nphn2 {
+  max-width: 2%;
+}
+
+.mat-elevation-z8 {
+  width: 100%;
+  overflow: auto;
+  max-height: calc(100vh - 40px);
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+table .mat-form-field {
+  margin-left: 0;
+  width: 90%;
+}
+
+.fab-button {
+  position: fixed;
+  bottom: 100px;
+  right: 100px;
+}

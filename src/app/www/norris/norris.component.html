@@ -1,0 +1,92 @@
+<div class="example-header">
+  <mat-form-field>
+    <mat-select  placeholder="Тип" [formControl]="typesControl">
+      <mat-option *ngFor="let type of this.socket.Types" [value]="type">
+        {{type.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field floatPlaceholder="never">
+    <input matInput #filter placeholder="Поиск">
+  </mat-form-field>
+</div>
+<!--<div class="example-header example-selection-header" *ngIf="!selection.isEmpty()">
+  {{selection.selected.length}} {{selection.selected.length == 1 ? 'элемент' : selection.selected.length < 5 ? 'элемента' : 'элементов'}} выделен
+</div>
+-->
+<div class="sbidh-table-container mat-elevation-z8">
+
+  <mat-table #table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="select">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+        </mat-checkbox>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row.id) : null" [checked]="selection.isSelected(row.id)">
+        </mat-checkbox>
+      </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> № </mat-header-cell>
+      <mat-cell *matCellDef="let row" [style.color]="row.color" > {{row.id}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="used">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Удален? </mat-header-cell>
+      <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.used}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="isppodr">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Подрядчик </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.isppodr}} </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="contractFull">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Контракт </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.contractFull}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="objectFull">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Обьект </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.objectFull}} </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="files">
+      <mat-header-cell *matHeaderCellDef> Файл </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <a href="http://upload.sbidh.ru/Uploads/{{row.files}}">
+          <mat-icon [color]=warn>file_download</mat-icon>
+        </a>
+
+      </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="comment">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Комментарий </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.comment}} </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="created_at">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Создан </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.created_at}} </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" [class.example-selected-row]="selection.isSelected(row.id)" (click)="selection.toggle(row.id)">
+    </mat-row>
+  </mat-table>
+
+  <div class="example-no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
+    "кто ищет, тот всегда найдёт" , а мы с вами пока нечего не нашли по данному запросу
+  </div>
+
+  <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="100" [pageSizeOptions]="[50,100,200]">
+  </mat-paginator>
+</div>
