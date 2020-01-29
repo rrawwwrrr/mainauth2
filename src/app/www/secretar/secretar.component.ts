@@ -19,9 +19,9 @@ import { SocketService } from './socket.service';
 export class SecretarComponent implements OnInit {
   displayedColumns = ['idshow', 'isppodrName', 'sum', 'numdoc', 'datedoc', 'datenow', 'typedocshow', 'targetshow'];
   dataSource: ExampleDataSource | null;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild('filter') filter: ElementRef;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild('filter', {static: true}) filter: ElementRef;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(public socket: SocketService, public dialog: MatDialog) { }
 

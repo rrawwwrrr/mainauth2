@@ -6,7 +6,8 @@ import { DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject, Observable, merge as observableMerge } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
-
+import { Stomp,Client, Message, StompSubscription   } from '@stomp/stompjs';
+import * as SockJS from 'sockjs-client';    
 
 
 
@@ -28,7 +29,22 @@ export class UsersRefComponent implements OnInit {
     ncbn_form = new FormControl('');
     nphn2_form = new FormControl('');
     newphone_form = new FormControl('');
-    constructor(private http: HttpClient) { }
+    private client;
+    constructor(private http: HttpClient) {
+        this.initializeWebSocketConnection();
+    }
+
+    initializeWebSocketConnection() {
+        this.client = Stomp.client(environment.sockJs)
+        let that = this;
+        this.client.connect({}, function (frame) {
+            that.client.subscribe("/chat", (message) => {
+                if (message.body) {
+                    console.log(message);
+                }
+            });
+        });
+    }
     apiUrl = environment.apiUrl;
     ngOnInit() {
         this.Database = new Database(this.http);
@@ -95,6 +111,8 @@ export class Database {
             res => this.addUser(res)
         )).subscribe();
     }
+
+
 }
 
 export class ExampleDataSource extends DataSource<any> {

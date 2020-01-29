@@ -30,7 +30,7 @@ export class GeoRefComponent implements OnInit {
     myMap: Promise<YandexMap> = new Promise<YandexMap>((resolve: () => void) => { this._mapResolver = resolve; });
     private _mapResolver: (value?: YandexMap) => void;
 
-    @ViewChild('yamaps') el: ElementRef;
+    @ViewChild('yamaps', {static: true}) el: ElementRef;
     constructor(private http: HttpClient, public snackBar: MatSnackBar) {
         this.http.get(environment.apiUrl + '/roads/getdata/').subscribe(data => { this.districts = data; console.table(data); });
     }

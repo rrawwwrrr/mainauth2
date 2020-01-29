@@ -18,7 +18,7 @@ export class StatisticsVoipComponent implements OnInit {
     displayedColumns = ['phone', 'fio', 'help', 'local', 'admlocal', 'city', 'free', 'mobile', 'alls'];
     dataSource: ExampleDataSource | null;
     selectparam: FormGroup;
-    @ViewChild('filter') filter: ElementRef;
+    @ViewChild('filter', {static: true}) filter: ElementRef;
 
     constructor(private _socket: SocketService, private fb: FormBuilder) {
         this.selectparam = fb.group({

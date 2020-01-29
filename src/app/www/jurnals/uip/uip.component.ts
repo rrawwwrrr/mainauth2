@@ -24,8 +24,8 @@ import * as moment from 'moment';
 
 export class UipComponent implements OnInit {
   displayedColumns: string[];
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   uipDisplayedColumns = ['num', 'dogname', 'dogdate', 'isppodr', 'nmc', 'sumdog', 'paypp', 'comment'];
   columnss = [];
   kbkdataSource: KbkDataSource | null;

@@ -16,7 +16,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 export class AdminUsersComponent implements OnInit {
     displayedColumns = ['otdel', 'fio', 'dolj', 'email', 'ncbn', 'nphn2', 'newphone'];
     dataSource: ExampleDataSource | null;
-    @ViewChild('filter') filter: ElementRef;
+    @ViewChild('filter', {static: true}) filter: ElementRef;
 
     constructor(public dialog: MatDialog, private _socket: SocketService) { }
 

@@ -40,9 +40,9 @@ export class DispatcherComponent implements OnInit {
   displayedColumnsDogs = ['checkbox', 'id', 'datebid', 'finishbid', 'status', 'contact', 'address', 'problem', 'creator', 'info'];
   colors = [{ id: 1, value: '#69F0AE' }, { id: 2, value: '#388E3C' }, { id: 3, value: '#FFD740' }, { id: 4, value: '#EF6C00' }];
   dataSource: ExampleDataSource | null;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild('filter') filter: ElementRef;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild('filter', {static: true}) filter: ElementRef;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
   localStatusControl = new FormControl(0);
   statusData = [
     { value: 0, viewValue: 'все' },
@@ -248,7 +248,7 @@ export class DispatcherDialogAddComponent implements OnInit {
   save = false;
   myMap: Promise<YandexMap> = new Promise<YandexMap>((resolve: () => void) => { this._mapResolver = resolve; });
   private _mapResolver: (value?: YandexMap) => void;
-  @ViewChild('yamaps') el: ElementRef;
+  @ViewChild('yamaps', {static: true}) el: ElementRef;
   constructor(
     public dialogRef: MatDialogRef<DispatcherDialogAddComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient, private fb: FormBuilder) {

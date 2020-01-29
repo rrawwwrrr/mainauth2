@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   title: 'Портал СБиДХ, env:dev',
   apiUrl: 'https://dev.sbdh.ru/api',
-  socketUrl: 'https://dev.sbdh.ru/socket.io'
+  socketUrl: 'https://dev.sbdh.ru/socket.io',
+  sockJs:'http://localhost:8090/socket/'
 };
 
 /*

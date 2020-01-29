@@ -27,9 +27,9 @@ export class NorrisComponent implements OnInit {
   displayedColumns = ['id', 'isppodr', 'contractFull', 'objectFull', 'files', 'comment'];
   selection = new SelectionModel<string>(true, []);
   dataSource: ExampleDataSource | null;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild('filter') filter: ElementRef;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild('filter', {static: true}) filter: ElementRef;
   typesControl = new FormControl();
   constructor(public socket: SocketService) { }
   ngOnInit() {

@@ -45,9 +45,9 @@ export class OziContractsComponent implements OnInit {
   displayedColumnsDogs = ['id', 'menu', 'numdog', 'datedog', 'isppodr', 'sign', 'sumdog', 'creator', 'comment'];
   colors = [{ id: 1, value: '#69F0AE' }, { id: 2, value: '#388E3C' }, { id: 3, value: '#FFD740' }, { id: 4, value: '#EF6C00' }];
   dataSource: ExampleDataSource | null;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild('filter') filter: ElementRef;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild('filter', {static: true}) filter: ElementRef;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
   myKbkControl: FormControl = new FormControl('', [Validators.required]);
   constructor(private socket: SocketService, public dialog: MatDialog) { }
   openDialogAdd(): void {
