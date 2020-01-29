@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: 'norris', component: NorrisComponent, canActivate: [AuthGuard] },
   { path: 'disp', component: DispatcherComponent, canActivate: [AuthGuard] },
   { path: 'ozi', component: OziContractsComponent, canActivate: [AuthGuard] },
-  { path: 'uip', component: UipComponent, canActivate: [AuthGuard] },
+  { path: 'uip', component: UipComponent/*, canActivate: [AuthGuard]*/ },
   { path: 'ref/users', component: UsersRefComponent },
   { path: 'ref/isp', component: IsppodrsRefComponent, canActivate: [AuthGuard] },
   { path: 'ref/geo', component: GeoRefComponent, canActivate: [AuthGuard] },

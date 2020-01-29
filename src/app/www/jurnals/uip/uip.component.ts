@@ -70,12 +70,12 @@ export class KbkDataSource extends DataSource<any> {
       reverse[2]['last'] = tmp.map(t => t.sumdog).reduce((acc, value) => acc + (value * 100), 0) / 100;
       reverse[3]['last'] = (reverse[1]['last'] * 100 - reverse[2]['last'] * 100) / 100;
       temp.map((x, i) => {
-        reverse[0][x['guid']] = x['kvr'];
-        // reverse[0][x['guid']] = x['name'];
+        // reverse[0][x['guid']] = x['value'];
+        reverse[0][x['guid']] = x['name'];
         reverse[1][x['guid']] = x.sum;
         reverse[2][x['guid']] = tmp.filter(obj => obj.guid === x['guid']).map(t => t.sumdog).reduce((acc, value) => acc + value, 0);
         reverse[3][x['guid']] = (x['sum'] - reverse[2][x['guid']]);
-        reverse[4][x['guid']] = x['kvr'];
+        reverse[4][x['guid']] = x['value'];
 
       });
       return reverse;
@@ -112,6 +112,10 @@ export class UipDataSource extends DataSource<any> {
     ];
     this._socketService.dataChangeDogs.subscribe(x => {
       this.sum = x.map(t => t.sumdog).reduce((acc, value) => acc + value, 0);
+      x.forEach(element => {
+        console.log(element);
+      });
+      
     });
     return observableMerge(...displayDataChanges).pipe(map(() => {
       this.filteredData = this._socketService.dataDogs.slice().filter((item: Dog) => {

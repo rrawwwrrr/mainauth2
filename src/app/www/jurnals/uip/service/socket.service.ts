@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
-import * as io from 'socket.io-client';
-import * as moment from 'moment';
+import { HttpClient } from '@angular/common/http';
 
 export interface Kbk {
     name: string;
@@ -34,65 +33,42 @@ export class SocketService {
     public people: any;
     private host: string = environment.socketUrl + '/uip';
     private socket: any;
-    constructor() {
-        moment.locale('ru');
-        this.socket = io(this.host);
-        this.socket.on('connect', () => this.connected());
-        this.socket.on('disconnect', () => this.disconnected());
-        this.socket.on('error', (error: string) => {
-            console.log(`ERROR: '${error}' (${this.host})`);
-        });
-
-
-        this.socket.on('condata', (data) => {
-            this.dataChangeKbk.next(data.kbk.map(kbk => {
+    constructor(private http: HttpClient) {
+        this.http.get('http://localhost:8090/kbk/getKbkByYear?year=2020').subscribe((data: any[]) => {
+            console.table(data);
+            this.dataChangeKbk.next(data.map(kbk => {
                 return {
                     name: kbk.name,
                     kosgu: kbk.kosgu,
                     sum: kbk.sum,
                     guid: kbk.guid,
-                    kvr: kbk.kvr
+                    value: kbk.value
                 };
             }));
-            const datauip = [];
-            console.table(data.uip);
-            data.uip.map(dog => {
-                dog.sum_agg.map(agg =>
-                    datauip.push({
-                        id: dog.id,
-                        isppodr: dog.isppodr || 'не указан',
-                        isppodrshow: 'хз',
-                        dogname: dog.dogname || 'бн',
-                        dogdate: dog.dogdate || '01.01.2001',
-                        sumdog: agg.summ || 0,
-                        guid: agg.kbk || 0,
-                        comment: dog.comment || '',
-                        year: dog.year || '0001',
-                        color: dog.color || 'green',
-                        creator: dog.creator || 'я'
-                    }));
-            });
+
+        });
+        this.http.get('http://localhost:8090/contract/getContractsByYear?year=2020').subscribe((data: any[]) => {
+
+            const datauip: any[] = data.map(dog => {
+                return this.createNewDog(dog)
+            }
+            );
             this.dataChangeDogs.next(datauip);
+
         });
 
-        /* this.dataChangeDogs.next(data.uip.map(dog => {
-            return this.createNewDog(dog);
-        })); */
-        /*  }); */
     }
-    /* addDog(dog: Dog) {
-        const copiedData = this.dataDogs.slice();
-        copiedData.push(dog);
-        this.dataChangeDogs.next(copiedData);
-    } */
-    private createNewDog(data) {
+
+
+    private createNewDog(data: any) {
+        console.table(data);
         return {
             id: data.id,
-            isppodr: data.isppodr || 'не указан',
+            isppodr: data.isppodr || 1,
             isppodrshow: 'хз',
             dogname: data.dogname || 'бн',
             dogdate: data.dogdate || '01.01.2001',
-            sumdog: data.sumdog || 0,
+            sumdog: data.sumdog ? Number.parseInt(data.sumdog) : 0,
             comment: data.comment || '',
             year: data.year || '0001',
             color: data.color || 'green',

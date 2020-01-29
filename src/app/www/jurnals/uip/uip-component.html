@@ -16,7 +16,7 @@
       <!-- <th mat-header-cell *matHeaderCellDef></th> -->
       <!-- <td [style.background-color] ="'mediumaquamarine'" mat-cell *matCellDef="let element"> -->
           <td [style.background-color] ="'mediumaquamarine'" mat-cell *matCellDef="let element">
-       {{ element.last}} <!-- <mat-icon>more_vert</mat-icon> -->
+       {{ element.last | number:'1.2-2':'ru'}} <!-- <mat-icon>more_vert</mat-icon> -->
       </td>
     </ng-container>
 

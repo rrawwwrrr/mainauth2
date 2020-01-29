@@ -57,7 +57,6 @@ export class AppComponent implements OnInit {
     this.dataService.UserData.subscribe(data => {
       this.myname = data.full_name;
     });
-    hasChild = (_: number, node: FoodNode) => !!node.children && node.children.length > 0;
+    //hasChild = (_: number, node: FoodNode) => !!node.children && node.children.length > 0;
   }
-}
-
+} 
